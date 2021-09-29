@@ -1,0 +1,24 @@
+- hosts: localhost
+  tasks:
+  - name: initializing dir for terraform
+    shell: "chdir=./terraform terraform init"
+    register: awstf
+  - debug:
+          var: awstf.stdout_lines
+
+  - name: applying terraform
+    shell: "chdir=./terraform terraform apply --auto-approve"
+    register: awstf1
+  - debug:
+          var: awstf1.stdout_lines
+
+  - name: setting up mster of aws
+    shell: "chdir=./configure/aws_k8s/master ansible-playbook master.yml"
+    register: awsmt
+  - debug:
+          var: awsmt.stdout_lines
+  - name: setting up aws worker node
+    shell: "chdir=./configure/aws_k8s/worker ansible-playbook worker.yml"
+    register: awswn
+  - debug:
+          var: awswn.stdout_lines

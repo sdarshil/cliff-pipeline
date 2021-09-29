@@ -1,0 +1,66 @@
+- name: kubernates repo create
+  copy: 
+    src: "kubernetes.repo"
+    dest: "/etc/yum.repos.d/kubernetes.repo"
+    
+- name : check package available or not 
+  package_facts:
+   manager: rpm
+
+- name: Install docker
+  shell: "yum install docker -y"
+
+- name: Install kubernetes
+  package:
+   name: "kubeadm"
+   state: present
+
+- name: creating docker dir
+  file:
+   path: "/etc/docker"
+   state: directory
+- name: change docker driver
+  copy:
+   src: "daemon.json"
+   dest: "/etc/docker/daemon.json"  
+- name: ipforward set on
+  shell: "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+- name: Install iproute-tc
+  package:
+   name: "iproute-tc"
+   state: present
+
+  
+- name: start docker service
+  service:
+   name: "docker"
+   state: started
+   enabled: yes
+
+- name: start kubelet service
+  service:
+   name: "kubelet"
+   state: started
+   enabled: yes
+      
+- name: pulling images
+  shell: "kubeadm config images pull"
+  
+- name: Join cluster 
+  shell: "{{ token }}"
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+

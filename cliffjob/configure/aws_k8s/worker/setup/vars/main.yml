@@ -1,0 +1,1 @@
+token: kubeadm join 10.0.0.212:6443 --token po0nt6.7d1009ihhzgl93pf --discovery-token-ca-cert-hash sha256:dddd85b3efebe7df68681ed9174e52b6a4a0f519eb09eaa139cee36830f9cbe3 

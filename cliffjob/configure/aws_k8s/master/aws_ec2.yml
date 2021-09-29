@@ -1,0 +1,9 @@
+plugin: aws_ec2
+regions: 
+  - ap-south-1
+AWS_ACCESS_KEY: AKIAZJL62LBOHC3QVAO3
+AWS_SECRET_KEY: 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
+keyed_groups:
+  - prefix: tag
+    key: tags
+
